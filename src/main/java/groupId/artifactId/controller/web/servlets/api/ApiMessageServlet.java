@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 @WebServlet(name = "MessagePage", urlPatterns = "/api/message")
-public class MessageServlet extends HttpServlet {
+public class ApiMessageServlet extends HttpServlet {
     private final MessageService messageService = MessageService.getInstance();
     private final UserService userService = UserService.getInstance();
 

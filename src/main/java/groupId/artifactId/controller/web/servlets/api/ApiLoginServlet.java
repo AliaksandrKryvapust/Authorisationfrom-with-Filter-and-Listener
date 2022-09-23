@@ -8,7 +8,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet(name = "Login", urlPatterns = "/api/login")
-public class LoginServlet extends HttpServlet {
+public class ApiLoginServlet extends HttpServlet {
     private final UserService userService = UserService.getInstance();
 
     @Override

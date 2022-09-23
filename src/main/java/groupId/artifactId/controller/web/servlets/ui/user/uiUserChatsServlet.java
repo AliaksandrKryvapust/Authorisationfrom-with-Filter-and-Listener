@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Chats", urlPatterns = "/ui/user/chats")
-public class ChatsServlet extends HttpServlet {
+public class uiUserChatsServlet extends HttpServlet {
     private final MessageService messageService = MessageService.getInstance();
 
     @Override

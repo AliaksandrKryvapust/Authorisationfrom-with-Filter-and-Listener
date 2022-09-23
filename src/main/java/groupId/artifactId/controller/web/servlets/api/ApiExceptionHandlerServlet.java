@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 
 
 @WebServlet(name = "ExceptionHandler", urlPatterns = "/exception")
-public class ExceptionHandlerServlet extends HttpServlet {
+public class ApiExceptionHandlerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");

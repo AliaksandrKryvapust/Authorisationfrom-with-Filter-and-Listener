@@ -40,7 +40,7 @@ public class StatisticService implements IStatisticService {
 
     @Override
     public Statistic getData() {
-        return new Statistic(sessionCounter.get(), userStorage.get().size(), storage.get().size());
+        return new Statistic(sessionCounter.get(), userStorage.get().size(), storage.get().size()); // переписать get()
     }
 }
 
