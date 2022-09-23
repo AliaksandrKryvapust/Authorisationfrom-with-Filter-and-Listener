@@ -1,89 +1,46 @@
 package groupId.artifactId.service;
 
-import groupId.artifactId.core.entity.SortedStatistic;
-import groupId.artifactId.core.entity.SortedStatisticsWithVotes;
-import groupId.artifactId.core.entity.Genre;
-import groupId.artifactId.core.entity.Singer;
-import groupId.artifactId.core.entity.Vote;
-import groupId.artifactId.service.api.IGenreService;
-import groupId.artifactId.service.api.ISingerService;
+import groupId.artifactId.core.entity.Statistic;
 import groupId.artifactId.service.api.IStatisticService;
-import groupId.artifactId.service.api.IVoteResultService;
+import groupId.artifactId.storage.MessageStorage;
+import groupId.artifactId.storage.UserStorage;
+import groupId.artifactId.storage.api.IMessageStorage;
+import groupId.artifactId.storage.api.IUserStorage;
 
-import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class StatisticService implements IStatisticService {
 
-    private static StatisticService firstInstance=null;
-    private final IVoteResultService voteResultService = VoteResultService.getInstance();
-    private final IGenreService genreService = GenreService.getInstance();
-    private final ISingerService singerService = SingerService.getInstance();
+    private static StatisticService firstInstance = null;
+    private static final AtomicInteger sessionCounter = new AtomicInteger(0);
+    private final IMessageStorage storage;
+    private final IUserStorage userStorage;
 
-    private StatisticService(){}
+    private StatisticService() {
+        this.storage = MessageStorage.getInstance();
+        this.userStorage = UserStorage.getInstance();
+    }
 
-    public static StatisticService getInstance(){
-        synchronized (StatisticService.class){
-            if (firstInstance==null){
-                firstInstance= new StatisticService();
+    public static StatisticService getInstance() {
+        synchronized (StatisticService.class) {
+            if (firstInstance == null) {
+                firstInstance = new StatisticService();
             }
         }
         return firstInstance;
     }
 
-    @Override
-    public void saveStatic(String singersData, String[] genresData, String massageData) {
-        String[] temp = new String[genresData.length];
-        for (int i = 0; i < genresData.length; i++) {
-            temp[i] = genreService.getGenre(Integer.parseInt(genresData[i]));
-        }
-        voteResultService.save(new Vote(singerService.getSinger(Integer.parseInt(singersData)), temp, massageData));
+    public static void decrSessionCounter() {
+        sessionCounter.decrementAndGet();
+    }
+
+    public static void incrSessionCounter() {
+        sessionCounter.incrementAndGet();
     }
 
     @Override
-    public List<Singer> getSingersForHtml() {
-        return singerService.get();
-    }
-
-    @Override
-    public List<Genre> getGenresForHtml() {
-        return genreService.get();
-    }
-
-    @Override
-    public SortedStatistic getSortedVotes() {
-        List<String> sortedSingers = voteResultService.getSingersVoteResults();
-        sortedSingers.sort(Comparator.comparing((i) -> Collections.frequency(sortedSingers, i)).reversed());
-        Set<String> uniqueSingerVotes = new LinkedHashSet<>(sortedSingers);
-        List<String> sortedGenres = voteResultService.getGenresVoteResults();
-        sortedGenres.sort(Comparator.comparing((i) -> Collections.frequency(sortedGenres, i)).reversed());
-        Set<String> uniqueGenresVotes = new LinkedHashSet<>(sortedGenres);
-        List<String> sortedMessages = voteResultService.getMessagesVoteResults();
-        return new SortedStatistic(new LinkedList<>(uniqueSingerVotes), new LinkedList<>(uniqueGenresVotes), new LinkedList<>(sortedMessages));
-    }
-    @Override
-    public SortedStatisticsWithVotes getSortedVotesWithStatistic() {
-        Map<String, Integer> sortedSingers = new HashMap<>();
-        for (int i = 0; i < voteResultService.getSingersVoteResults().size(); i++) {
-            if (!sortedSingers.containsKey(voteResultService.getSingersVoteResults().get(i))) {
-                sortedSingers.put(voteResultService.getSingersVoteResults().get(i), 1);
-            } else {
-                sortedSingers.put(voteResultService.getSingersVoteResults().get(i), sortedSingers.get(voteResultService.getSingersVoteResults().get(i)) + 1);
-            }
-        }
-        Map<String, Integer> sortedGenres = new HashMap<>();
-        for (int i = 0; i < voteResultService.getGenresVoteResults().size(); i++) {
-            if (!sortedGenres.containsKey(voteResultService.getGenresVoteResults().get(i))) {
-                sortedGenres.put(voteResultService.getGenresVoteResults().get(i), 1);
-            } else {
-                sortedGenres.put(voteResultService.getGenresVoteResults().get(i), sortedGenres.get(voteResultService.getGenresVoteResults().get(i)) + 1);
-            }
-        }
-        Map<String, Integer> sortedSingersVotes = new LinkedHashMap<>();
-        Map<String, Integer> sortedGenresVotes = new LinkedHashMap<>();
-        List<String> sortedMessages = new LinkedList<>(voteResultService.getMessagesVoteResults());
-        sortedSingers.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEachOrdered((i)-> sortedSingersVotes.put(i.getKey(),i.getValue()));
-        sortedGenres.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEachOrdered((i)-> sortedGenresVotes.put(i.getKey(),i.getValue()));
-        return new SortedStatisticsWithVotes(sortedSingersVotes,sortedGenresVotes,sortedMessages);
+    public Statistic getData() {
+        return new Statistic(sessionCounter.get(), userStorage.get().size(), storage.get().size());
     }
 }
 
