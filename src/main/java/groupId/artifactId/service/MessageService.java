@@ -5,6 +5,7 @@ import groupId.artifactId.core.entity.Message;
 import groupId.artifactId.core.entity.User;
 import groupId.artifactId.core.mapper.MessageDtoMapper;
 import groupId.artifactId.service.api.IMessageService;
+import groupId.artifactId.service.api.IUserService;
 import groupId.artifactId.storage.MessageStorage;
 import groupId.artifactId.storage.api.IMessageStorage;
 import groupId.artifactId.util.Helper;
@@ -17,7 +18,7 @@ public class MessageService implements IMessageService {
     private static MessageService firstInstance = null;
     private final IMessageStorage storage;
     private final MessageValidator messageDtoValidate;
-    private final UserService userService;
+    private final IUserService userService;
 
     private MessageService() {
         this.storage = MessageStorage.getInstance();
