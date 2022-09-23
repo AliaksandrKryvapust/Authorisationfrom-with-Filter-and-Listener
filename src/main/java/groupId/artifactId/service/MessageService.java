@@ -6,9 +6,7 @@ import groupId.artifactId.core.entity.User;
 import groupId.artifactId.core.mapper.MessageDtoMapper;
 import groupId.artifactId.service.api.IMessageService;
 import groupId.artifactId.storage.MessageStorage;
-import groupId.artifactId.storage.UserStorage;
 import groupId.artifactId.storage.api.IMessageStorage;
-import groupId.artifactId.storage.api.IUserStorage;
 import groupId.artifactId.util.Helper;
 
 import java.util.ArrayList;
@@ -19,12 +17,12 @@ public class MessageService implements IMessageService {
     private static MessageService firstInstance = null;
     private final IMessageStorage storage;
     private final MessageValidator messageDtoValidate;
-    private final IUserStorage userStorage;
+    private final UserService userService;
 
     private MessageService() {
         this.storage = MessageStorage.getInstance();
         this.messageDtoValidate = MessageValidator.getInstance();
-        this.userStorage = UserStorage.getInstance();
+        this.userService = UserService.getInstance();
     }
 
     public static MessageService getInstance() {
@@ -56,9 +54,9 @@ public class MessageService implements IMessageService {
     @Override
     public void save(MessageDto messageDto) {
         this.messageDtoValidate.validate(messageDto);
-        User author = this.userStorage.getByLogin(messageDto.getAuthor()).
+        User author = this.userService.getByLogin(messageDto.getAuthor()).
                 orElseThrow(() -> new IllegalStateException("Error code 500.There is no Author in Dto"));
-        User destination = this.userStorage.getByLogin(messageDto.getDestination()).
+        User destination = this.userService.getByLogin(messageDto.getDestination()).
                 orElseThrow(() -> new IllegalStateException("Error code 500.There is no Destination in Dto"));
         this.storage.save(MessageDtoMapper.messageDtoMapping(messageDto, author, destination));
     }
