@@ -3,6 +3,8 @@ package groupId.artifactId.controller.web.servlets.api;
 import groupId.artifactId.core.dto.MessageDto;
 import groupId.artifactId.service.MessageService;
 import groupId.artifactId.service.UserService;
+import groupId.artifactId.service.api.IMessageService;
+import groupId.artifactId.service.api.IUserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +14,8 @@ import java.time.LocalDateTime;
 
 @WebServlet(name = "MessagePage", urlPatterns = "/api/message")
 public class ApiMessageServlet extends HttpServlet {
-    private final MessageService messageService = MessageService.getInstance();
-    private final UserService userService = UserService.getInstance();
+    private final IMessageService messageService = MessageService.getInstance();
+    private final IUserService userService = UserService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)

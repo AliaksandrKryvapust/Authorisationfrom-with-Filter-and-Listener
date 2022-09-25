@@ -2,6 +2,7 @@ package groupId.artifactId.controller.web.servlets.api.admin;
 
 import groupId.artifactId.core.dto.UserDto;
 import groupId.artifactId.service.UserService;
+import groupId.artifactId.service.api.IUserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 
 @WebServlet(name = "NewAdmin", urlPatterns = "/api/admin/newAdmin")
 public class ApiNewAdminServlet extends HttpServlet {
-    private final UserService userService = UserService.getInstance();
+    private final IUserService userService = UserService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

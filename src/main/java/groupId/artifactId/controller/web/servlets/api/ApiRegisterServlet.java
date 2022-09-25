@@ -2,6 +2,7 @@ package groupId.artifactId.controller.web.servlets.api;
 
 import groupId.artifactId.core.dto.UserDto;
 import groupId.artifactId.service.UserService;
+import groupId.artifactId.service.api.IUserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 
 @WebServlet(name = "Register", urlPatterns = "/api/user")
 public class ApiRegisterServlet extends HttpServlet {
-    private final UserService userService = UserService.getInstance();
+    private final IUserService userService = UserService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
