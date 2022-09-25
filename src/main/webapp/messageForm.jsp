@@ -38,6 +38,11 @@
     <button onclick="location.href='${pageContext.request.contextPath}/ui/user/chats'" type="button">
         Go to chat room
     </button>
+    <c:if test="${sessionScope.button}">
+        <button onclick="location.href='${pageContext.request.contextPath}/ui/admin/statistic'" type="button">
+            Statistic for Admin
+        </button>
+    </c:if>
 </p>
 </body>
 </html>

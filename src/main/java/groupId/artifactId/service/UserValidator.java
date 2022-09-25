@@ -1,6 +1,7 @@
 package groupId.artifactId.service;
 
 import groupId.artifactId.core.dto.UserDto;
+import groupId.artifactId.core.dto.VerificationDto;
 import groupId.artifactId.core.entity.User;
 import groupId.artifactId.service.api.IUserValidator;
 import groupId.artifactId.storage.UserStorage;
@@ -55,11 +56,10 @@ public class UserValidator implements IUserValidator {
             throw new IllegalArgumentException("Error code 400. There is no such user login");
         }
     }
-
     @Override
-    public void validateUserAndPassword(UserDto item) {
-        Optional<User> user = this.storage.getByLogin(item.getLogin());
-        if (user.isEmpty() || !user.get().getPassword().equals(item.getPassword())) {
+    public void validateVerificationDto(VerificationDto verificationDto) {
+        Optional<User> user = this.storage.getByLogin(verificationDto.getLogin());
+        if (user.isEmpty() || !user.get().getPassword().equals(verificationDto.getPassword())) {
             throw new IllegalArgumentException("Error code 400. Login or password is not valid");
         }
     }

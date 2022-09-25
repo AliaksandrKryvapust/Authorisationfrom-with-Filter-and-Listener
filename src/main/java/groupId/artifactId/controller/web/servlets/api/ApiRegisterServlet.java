@@ -1,7 +1,7 @@
 package groupId.artifactId.controller.web.servlets.api;
 
+import groupId.artifactId.core.dto.UserDto;
 import groupId.artifactId.service.UserService;
-import groupId.artifactId.util.Helper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 
 
 @WebServlet(name = "Register", urlPatterns = "/api/user")
@@ -29,7 +30,7 @@ public class ApiRegisterServlet extends HttpServlet {
         String dateOfBirth = req.getParameter("dateOfBirth");
         validateDateOfBirth(dateOfBirth);
         try {
-            userService.save(Helper.createUserDto(login, password, name, dateOfBirth));
+            userService.save(new UserDto(login, password, name, LocalDate.parse(dateOfBirth)));
         } catch (RuntimeException e) {
             throw new ServletException(e);
         }

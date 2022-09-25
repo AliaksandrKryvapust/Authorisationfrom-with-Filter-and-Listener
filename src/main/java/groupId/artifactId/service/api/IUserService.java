@@ -8,12 +8,15 @@ import java.util.Optional;
 public interface IUserService extends IEEssenceService<User> {
     Optional<User> getByLogin(String login);
 
-    void validateUser(String login, String password);
+    int getSize();
 
     void validateDestination(String login);
 
     boolean validateAdmin(String login);
 
+    boolean validateUser(String login);
+
     void save(UserDto userDto);
+
     void saveAdmin(UserDto user);
 }

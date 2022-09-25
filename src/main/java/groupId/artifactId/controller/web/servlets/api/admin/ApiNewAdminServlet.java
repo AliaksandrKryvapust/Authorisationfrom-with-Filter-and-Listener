@@ -1,7 +1,7 @@
 package groupId.artifactId.controller.web.servlets.api.admin;
 
+import groupId.artifactId.core.dto.UserDto;
 import groupId.artifactId.service.UserService;
-import groupId.artifactId.util.Helper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +24,7 @@ public class ApiNewAdminServlet extends HttpServlet {
         String password = req.getParameter("password");
         validatePassword(password);
         try {
-            userService.saveAdmin(Helper.createUserDto(login, password, setName(), setDateOfBirth()));
+            userService.saveAdmin(new UserDto(login, password, setName(), setDateOfBirth()));
         } catch (RuntimeException e) {
             throw new ServletException(e);
         }
@@ -47,8 +47,8 @@ public class ApiNewAdminServlet extends HttpServlet {
         return "Admin";
     }
 
-    private String setDateOfBirth() {
-        return LocalDate.EPOCH.toString();
+    private LocalDate setDateOfBirth() {
+        return LocalDate.EPOCH;
     }
 }
 

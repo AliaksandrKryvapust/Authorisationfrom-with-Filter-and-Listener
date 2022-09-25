@@ -8,7 +8,6 @@ import groupId.artifactId.service.api.IMessageService;
 import groupId.artifactId.service.api.IUserService;
 import groupId.artifactId.storage.MessageStorage;
 import groupId.artifactId.storage.api.IMessageStorage;
-import groupId.artifactId.util.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +38,15 @@ public class MessageService implements IMessageService {
     public List<MessageDto> getByDestination(String login) {
         List<MessageDto> temp = new ArrayList<>();
         for (Message message : this.storage.getByDestination(login)) {
-            temp.add(Helper.createMessageDtoForServlet(message.getDateTime(), message.getAuthor().getLogin(),
+            temp.add(new MessageDto(message.getDateTime(), message.getAuthor().getLogin(),
                     message.getDestination().getLogin(), message.getMessage()));
         }
         return temp;
+    }
+
+    @Override
+    public int getSize() {
+        return this.storage.getStorageSize();
     }
 
     @Override

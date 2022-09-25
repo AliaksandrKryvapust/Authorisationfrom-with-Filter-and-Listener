@@ -18,7 +18,6 @@ public class SessionCountListener implements HttpSessionAttributeListener {
             incrSessionCounter();
         }
     }
-
     @Override
     public void attributeRemoved(HttpSessionBindingEvent event) {
         if (event.getName().equals("login")) {

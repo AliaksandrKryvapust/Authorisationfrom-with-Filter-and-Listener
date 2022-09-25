@@ -10,4 +10,7 @@
     <listener>
         <listener-class>groupId.artifactId.controller.web.listeners.SessionCountListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>groupId.artifactId.controller.web.listeners.DefaultDataInitializer</listener-class>
+    </listener>
 </web-app>

@@ -6,13 +6,13 @@ import groupId.artifactId.core.mapper.UserDtoMapper;
 import groupId.artifactId.service.api.IUserService;
 import groupId.artifactId.storage.UserStorage;
 import groupId.artifactId.storage.api.IUserStorage;
-import groupId.artifactId.util.Helper;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import static groupId.artifactId.core.entity.Role.ADMIN;
+import static groupId.artifactId.core.entity.Role.USER;
 
 public class UserService implements IUserService {
     private static UserService firstInstance = null;
@@ -44,6 +44,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public int getSize() {
+        return this.storage.getStorageSize();
+    }
+
+    @Override
     public void save(UserDto user) {
         this.userValidator.validate(user);
         this.storage.save(UserDtoMapper.userDtoMapping(user));
@@ -56,14 +61,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void validateUser(String login, String password) {
-        UserDto userDto = Helper.createUserDto(login, password, "null", LocalDate.now().toString());
-        this.userValidator.validateUserAndPassword(userDto); // сделать разные конструкторы
-    }
-
-    @Override
     public void validateDestination(String login) {
-        UserDto userDto = Helper.createUserDto(login, "null", "null", LocalDate.now().toString());
+        UserDto userDto = new UserDto(login, "null", "null", LocalDate.now());
         this.userValidator.validateUser(userDto);
     }
 
@@ -71,5 +70,11 @@ public class UserService implements IUserService {
     public boolean validateAdmin(String login) {
         Optional<User> user = this.storage.getByLogin(login);
         return user.orElseThrow(() -> new IllegalStateException("There is no such user.")).getRole().equals(ADMIN);
+    }
+
+    @Override
+    public boolean validateUser(String login) {
+        Optional<User> user = this.storage.getByLogin(login);
+        return user.orElseThrow(() -> new IllegalStateException("There is no such user.")).getRole().equals(USER);
     }
 }

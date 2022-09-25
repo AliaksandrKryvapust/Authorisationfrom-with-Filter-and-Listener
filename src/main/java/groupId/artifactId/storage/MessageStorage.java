@@ -29,6 +29,11 @@ public class MessageStorage implements IMessageStorage {
     }
 
     @Override
+    public int getStorageSize() {
+        return messageList.size();
+    }
+
+    @Override
     public List<Message> getByDestination(String login) {
         return messageList.stream().filter((i) -> i.getDestination().getLogin().equals(login)).
                 collect(Collectors.toList());

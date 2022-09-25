@@ -1,6 +1,8 @@
 package groupId.artifactId.controller.web.servlets.api;
 
-import groupId.artifactId.service.UserService;
+import groupId.artifactId.core.dto.VerificationDto;
+import groupId.artifactId.service.UserValidator;
+import groupId.artifactId.service.api.IUserValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +11,7 @@ import java.io.IOException;
 
 @WebServlet(name = "Login", urlPatterns = "/api/login")
 public class ApiLoginServlet extends HttpServlet {
-    private final UserService userService = UserService.getInstance();
+    private final IUserValidator userValidator = UserValidator.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -19,7 +21,7 @@ public class ApiLoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         try {
-            userService.validateUser(login, password);
+            userValidator.validateVerificationDto(new VerificationDto(login,password));
         } catch (Exception e) {
             throw new ServletException(e);
         }

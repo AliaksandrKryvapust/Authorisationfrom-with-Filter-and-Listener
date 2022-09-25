@@ -1,8 +1,8 @@
 package groupId.artifactId.controller.web.servlets.api;
 
+import groupId.artifactId.core.dto.MessageDto;
 import groupId.artifactId.service.MessageService;
 import groupId.artifactId.service.UserService;
-import groupId.artifactId.util.Helper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +26,7 @@ public class ApiMessageServlet extends HttpServlet {
         try {
             userService.validateDestination(destination);
             messageService.validateInput(message);
-            messageService.save(Helper.createMessageDto(LocalDateTime.now(),
+            messageService.save( new MessageDto(LocalDateTime.now(),
                     (String) session.getAttribute("login"), destination, message));
         } catch (Exception e) {
             throw new ServletException(e);
