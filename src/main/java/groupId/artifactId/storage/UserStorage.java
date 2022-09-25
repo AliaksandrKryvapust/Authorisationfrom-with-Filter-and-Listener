@@ -1,6 +1,6 @@
 package groupId.artifactId.storage;
 
-import groupId.artifactId.core.entity.User;
+import groupId.artifactId.storage.entity.User;
 import groupId.artifactId.storage.api.IUserStorage;
 
 import java.util.*;

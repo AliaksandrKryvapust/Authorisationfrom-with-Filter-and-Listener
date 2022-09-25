@@ -1,6 +1,6 @@
 package groupId.artifactId.storage.api;
 
-import groupId.artifactId.core.entity.Message;
+import groupId.artifactId.storage.entity.Message;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package groupId.artifactId.core.mapper;
 
 import groupId.artifactId.core.dto.MessageDto;
-import groupId.artifactId.core.entity.Message;
-import groupId.artifactId.core.entity.User;
+import groupId.artifactId.storage.entity.Message;
+import groupId.artifactId.storage.entity.User;
 
 
 public class MessageDtoMapper {

@@ -1,7 +1,7 @@
 package groupId.artifactId.service.api;
 
 import groupId.artifactId.core.dto.UserDto;
-import groupId.artifactId.core.entity.User;
+import groupId.artifactId.storage.entity.User;
 
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 package groupId.artifactId.service;
 
 import groupId.artifactId.core.dto.UserDto;
-import groupId.artifactId.core.entity.User;
+import groupId.artifactId.storage.entity.User;
 import groupId.artifactId.core.mapper.UserDtoMapper;
 import groupId.artifactId.service.api.IUserService;
 import groupId.artifactId.storage.UserStorage;
@@ -11,8 +11,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static groupId.artifactId.core.entity.Role.ADMIN;
-import static groupId.artifactId.core.entity.Role.USER;
+import static groupId.artifactId.storage.entity.api.Role.ADMIN;
+import static groupId.artifactId.storage.entity.api.Role.USER;
 
 public class UserService implements IUserService {
     private static UserService firstInstance = null;

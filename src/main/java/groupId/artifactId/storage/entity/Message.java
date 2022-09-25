@@ -1,4 +1,6 @@
-package groupId.artifactId.core.entity;
+package groupId.artifactId.storage.entity;
+
+import groupId.artifactId.storage.entity.User;
 
 import java.time.LocalDateTime;
 

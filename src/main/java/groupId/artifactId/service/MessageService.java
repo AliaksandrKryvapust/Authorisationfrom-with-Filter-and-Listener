@@ -1,8 +1,8 @@
 package groupId.artifactId.service;
 
 import groupId.artifactId.core.dto.MessageDto;
-import groupId.artifactId.core.entity.Message;
-import groupId.artifactId.core.entity.User;
+import groupId.artifactId.storage.entity.Message;
+import groupId.artifactId.storage.entity.User;
 import groupId.artifactId.core.mapper.MessageDtoMapper;
 import groupId.artifactId.service.api.IMessageService;
 import groupId.artifactId.service.api.IUserService;

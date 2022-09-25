@@ -2,7 +2,7 @@ package groupId.artifactId.service;
 
 import groupId.artifactId.core.dto.UserDto;
 import groupId.artifactId.core.dto.VerificationDto;
-import groupId.artifactId.core.entity.User;
+import groupId.artifactId.storage.entity.User;
 import groupId.artifactId.service.api.IUserValidator;
 import groupId.artifactId.storage.UserStorage;
 import groupId.artifactId.storage.api.IUserStorage;

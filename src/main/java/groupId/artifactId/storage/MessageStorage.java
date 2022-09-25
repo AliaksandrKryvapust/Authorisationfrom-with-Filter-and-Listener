@@ -1,6 +1,6 @@
 package groupId.artifactId.storage;
 
-import groupId.artifactId.core.entity.Message;
+import groupId.artifactId.storage.entity.Message;
 import groupId.artifactId.storage.api.IMessageStorage;
 
 import java.util.ArrayList;

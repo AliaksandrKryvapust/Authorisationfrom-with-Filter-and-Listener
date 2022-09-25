@@ -1,9 +1,9 @@
 package groupId.artifactId.core.mapper;
 
 import groupId.artifactId.core.dto.UserDto;
-import groupId.artifactId.core.entity.Role;
-import groupId.artifactId.core.entity.User;
-import groupId.artifactId.core.entity.UserBuilder;
+import groupId.artifactId.storage.entity.api.Role;
+import groupId.artifactId.storage.entity.User;
+import groupId.artifactId.storage.entity.UserBuilder;
 
 import java.time.LocalDate;
 
