@@ -42,6 +42,9 @@
     <button onclick="location.href='${pageContext.request.contextPath}/ui/admin/admin'" type="button">
         Create new Admin
     </button>
+    <button onclick="location.href='${pageContext.request.contextPath}/ui/user/chats'" type="button">
+        Go to chat room
+    </button>
 </p>
 </body>
 </html>
