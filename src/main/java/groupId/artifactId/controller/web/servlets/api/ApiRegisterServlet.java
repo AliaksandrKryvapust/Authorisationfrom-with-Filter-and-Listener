@@ -4,7 +4,6 @@ import groupId.artifactId.core.dto.UserDto;
 import groupId.artifactId.service.UserService;
 import groupId.artifactId.service.api.IUserService;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,7 @@ public class ApiRegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, ServletException {
+            throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
         String login = req.getParameter("login");
@@ -33,8 +32,9 @@ public class ApiRegisterServlet extends HttpServlet {
         try {
             userService.save(new UserDto(login, password, name, LocalDate.parse(dateOfBirth)));
         } catch (RuntimeException e) {
-            throw new ServletException(e);
+            resp.setStatus(500);
         }
+        resp.setStatus(201);
         resp.sendRedirect(req.getContextPath() + "/ui/singIn");
     }
 

@@ -4,9 +4,11 @@ import groupId.artifactId.core.dto.VerificationDto;
 import groupId.artifactId.service.UserValidator;
 import groupId.artifactId.service.api.IUserValidator;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Login", urlPatterns = "/api/login")
@@ -15,7 +17,7 @@ public class ApiLoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, ServletException {
+            throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
         String login = req.getParameter("login");
@@ -23,10 +25,11 @@ public class ApiLoginServlet extends HttpServlet {
         try {
             userValidator.validateVerificationDto(new VerificationDto(login,password));
         } catch (Exception e) {
-            throw new ServletException(e);
+            resp.setStatus(500);
         }
         HttpSession session = req.getSession();
         session.setAttribute("login", login);
+        resp.setStatus(201);
         resp.sendRedirect(req.getContextPath() + "/ui/user/message");
     }
 }

@@ -6,9 +6,11 @@ import groupId.artifactId.service.UserService;
 import groupId.artifactId.service.api.IMessageService;
 import groupId.artifactId.service.api.IUserService;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
@@ -19,7 +21,7 @@ public class ApiMessageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, ServletException {
+            throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
         String destination = req.getParameter("destination");
@@ -31,8 +33,9 @@ public class ApiMessageServlet extends HttpServlet {
             messageService.save( new MessageDto(LocalDateTime.now(),
                     (String) session.getAttribute("login"), destination, message));
         } catch (Exception e) {
-            throw new ServletException(e);
+            resp.setStatus(500);
         }
+        resp.setStatus(201);
         resp.sendRedirect(req.getContextPath() + "/ui/user/chats");
     }
 }

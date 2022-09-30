@@ -26,5 +26,6 @@ public class ApiExceptionHandlerServlet extends HttpServlet {
         Throwable throwable = (Throwable) req.getAttribute("javax.servlet.error.exception");
         PrintWriter writer = resp.getWriter();
         writer.write("<p> Error: " + throwable.getMessage() + "</p>");
+        resp.setStatus(201);
     }
 }

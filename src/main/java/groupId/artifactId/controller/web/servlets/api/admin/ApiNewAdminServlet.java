@@ -4,7 +4,6 @@ import groupId.artifactId.core.dto.UserDto;
 import groupId.artifactId.service.UserService;
 import groupId.artifactId.service.api.IUserService;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ public class ApiNewAdminServlet extends HttpServlet {
     private final IUserService userService = UserService.getInstance();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
         String login = req.getParameter("login");
@@ -27,9 +26,10 @@ public class ApiNewAdminServlet extends HttpServlet {
         try {
             userService.saveAdmin(new UserDto(login, password, setName(), setDateOfBirth()));
         } catch (RuntimeException e) {
-            throw new ServletException(e);
+            resp.setStatus(500);
         }
         resp.sendRedirect(req.getContextPath() + "/ui/singIn");
+        resp.setStatus(201);
     }
 
     private void validateLogin(String login) {
